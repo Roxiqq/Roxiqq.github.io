@@ -107,7 +107,20 @@
   }
 </style>
 
-<body>
+<body><div class="light"></div>
+<div class="light"></div>
+<div class="light"></div>
+
+<!-- 20 konfetti -->
+<script>
+  for (let i = 0; i < 20; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'confetti';
+    dot.style.setProperty('--i', i);
+    document.body.appendChild(dot);
+  }
+</script>
+
   <h1>Kreator Awatara</h1>
   <canvas id="avatarCanvas"></canvas>
 

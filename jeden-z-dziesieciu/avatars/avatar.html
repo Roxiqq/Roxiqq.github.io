@@ -164,3 +164,13 @@
     }
   </style>
 </head>
+
+<script>
+  for (let i = 0; i < 100; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'confetti';
+    dot.style.setProperty('--i', i);
+    document.body.appendChild(dot);
+  }
+</script>
+

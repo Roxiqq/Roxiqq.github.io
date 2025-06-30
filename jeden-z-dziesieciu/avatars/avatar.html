@@ -84,43 +84,6 @@
   }
 </style>
 
-  <head>
-  <title>Kreator Awatara</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-      color: white;
-      font-family: sans-serif;
-    }
-
-    .confetti {
-      position: absolute;
-      top: 0;
-      width: 10px;
-      height: 10px;
-      background: white;
-      border-radius: 50%;
-      animation: fall 5s linear infinite;
-      left: calc(var(--i) * 1%);
-      animation-delay: calc(var(--i) * 0.1s);
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-10px);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-  </style>
-</head>
-
-
 </head><style>
   body {
     margin: 0;
@@ -166,3 +129,38 @@
 </body>
 </html>
 
+<head>
+  <title>Kreator Awatara</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      font-family: sans-serif;
+    }
+
+    .confetti {
+      position: absolute;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      animation: fall 5s linear infinite;
+      left: calc(var(--i) * 1%);
+      animation-delay: calc(var(--i) * 0.1s);
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>

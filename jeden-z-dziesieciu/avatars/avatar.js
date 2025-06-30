@@ -1,21 +1,30 @@
-import * as THREE from 'https://cdn.skypack.dev/three';
+import * as THREE from 'https://cdn.skypack.dev/three@0.152.2';
 
-const canvas = document.getElementById('avatarCanvas');
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+scene.background = new THREE.Color(0x0d1b2a);
 
-renderer.setSize(300, 300);
+const camera = new THREE.PerspectiveCamera(
+  60,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 camera.position.z = 5;
 
-const geometry = new THREE.SphereGeometry(1, 32, 32); // Głowa
-const material = new THREE.MeshStandardMaterial({ color: 0xffcc99 });
-const head = new THREE.Mesh(geometry, material);
-scene.add(head);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
+// Światło
 const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(2, 2, 5).normalize();
+light.position.set(1, 2, 3);
 scene.add(light);
+
+// Prosty awatar – kula jako głowa
+const headGeometry = new THREE.SphereGeometry(1, 32, 32);
+const headMaterial = new THREE.MeshStandardMaterial({ color: 0xffaaaa });
+const head = new THREE.Mesh(headGeometry, headMaterial);
+scene.add(head);
 
 function animate() {
   requestAnimationFrame(animate);
@@ -25,46 +34,8 @@ function animate() {
 
 animate();
 
-import * as THREE from 'https://cdn.skypack.dev/three@0.150.1';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.150.1/examples/jsm/controls/OrbitControls';
-
-const scene = new THREE.Scene();
-
-// Kamera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
-
-// Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-// Światło
-const light = new THREE.PointLight(0xffffff, 1, 100);
-light.position.set(10, 10, 10);
-scene.add(light);
-
-// Avatar - kula jako głowa
-const geometry = new THREE.SphereGeometry(1, 32, 32);
-const material = new THREE.MeshStandardMaterial({ color: 0xffcc99 });
-const head = new THREE.Mesh(geometry, material);
-scene.add(head);
-
-// Kontrolki kamery
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-
-// Responzywność
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
-
-// Animacja
-function animate() {
-  requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene, camera);
-}
-animate();

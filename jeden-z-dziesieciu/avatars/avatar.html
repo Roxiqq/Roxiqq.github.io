@@ -1,177 +1,47 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kreator Awatara</title>
-  <style>
-    body { background: #121212; color: white; font-family: sans-serif; text-align: center; }
-    canvas { width: 300px; height: 300px; margin-top: 20px; }
-  </style><style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-    height: 100vh;
-    color: white;
-    text-align: center;
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kreator Awatara</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #0d1b2a;
+      }
 
-  h1 {
-    margin-top: 30px;
-    z-index: 10;
-    position: relative;
-  }
+      canvas {
+        display: block;
+      }
 
-  .light {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    animation: pulse 4s infinite ease-in-out;
-    pointer-events: none;
-  }
+      .background-dots {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: radial-gradient(#ffffff22 1px, transparent 1px);
+        background-size: 20px 20px;
+        pointer-events: none;
+        z-index: 0;
+      }
 
-  .light:nth-child(1) {
-    top: 20%;
-    left: 15%;
-    animation-delay: 0s;
-  }
-
-  .light:nth-child(2) {
-    top: 40%;
-    left: 70%;
-    animation-delay: 1s;
-  }
-
-  .light:nth-child(3) {
-    top: 70%;
-    left: 40%;
-    animation-delay: 2s;
-  }
-
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(0.9);
-      opacity: 0.3;
-    }
-    50% {
-      transform: scale(1.2);
-      opacity: 0.6;
-    }
-  }
-
-  .confetti {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: hsl(calc(var(--i) * 36), 80%, 60%);
-    top: -10px;
-    left: calc(var(--i) * 3%);
-    animation: fall 5s linear infinite;
-    opacity: 0.8;
-  }
-
-  @keyframes fall {
-    0% {
-      transform: translateY(0) rotate(0deg);
-    }
-    100% {
-      transform: translateY(100vh) rotate(360deg);
-    }
-  }
-</style>
-
-</head><style>
-  body {
-    margin: 0;
-    background: linear-gradient(120deg, #1a1a40, #4b0082, #1a1a40);
-    background-size: 400% 400%;
-    animation: gradient 10s ease infinite;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  @keyframes gradient {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-  }
-
-  h1 {
-    text-align: center;
-    padding: 20px;
-    font-size: 2.5rem;
-  }
-</style>
-
-<<div class="light"></div>
-<div class="light"></div>
-<div class="light"></div>
-
-<!-- 20 konfetti -->
-<script>
-  for (let i = 0; i < 100; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'confetti';
-    dot.style.setProperty('--i', i);
-    document.body.appendChild(dot);
-  }
-</script>
->
-
-  <h1>Kreator Awatara</h1>
-  <canvas id="avatarCanvas"></canvas>
-
-  <script type="module" src="avatar.js"></script>
-</body>
+      .title {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: sans-serif;
+        color: white;
+        font-size: 28px;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-dots"></div>
+    <div class="title">Kreator Awatara</div>
+    <script type="module" src="avatar.js"></script>
+  </body>
 </html>
 
-<head>
-  <title>Kreator Awatara</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-      color: white;
-      font-family: sans-serif;
-    }
-
-    .confetti {
-      position: absolute;
-      top: 0;
-      width: 10px;
-      height: 10px;
-      background: white;
-      border-radius: 50%;
-      animation: fall 5s linear infinite;
-      left: calc(var(--i) * 1%);
-      animation-delay: calc(var(--i) * 0.1s);
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-10px);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-  </style>
-</head>
-
-<script>
-  for (let i = 0; i < 100; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'confetti';
-    dot.style.setProperty('--i', i);
-    document.body.appendChild(dot);
-  }
-</script>
-
-<script type="module" src="avatar.js"></script>

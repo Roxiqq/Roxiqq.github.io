@@ -2,83 +2,96 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <title>Kreator Awatara 3D</title>
+  <title>AVATAR</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
       overflow: hidden;
-      background: radial-gradient(ellipse at center, #0f2027, #203a43, #2c5364);
-      height: 100%;
-      width: 100%;
+      background: radial-gradient(ellipse at center, #001f3f, #000);
+      color: white;
+      font-family: sans-serif;
     }
-
-    canvas {
-      display: block;
-    }
-
-    .title {
+    #gui {
       position: absolute;
       top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #ffffff;
-      font-size: 28px;
-      font-family: sans-serif;
+      left: 20px;
       z-index: 10;
-      text-shadow: 0 0 10px #000;
     }
   </style>
 </head>
 <body>
-  <div class="title">🎨 Kreator Awatara 3D</div>
+  <div id="gui">
+    <label>Kolor skóry: <input type="color" id="skinColor" value="#ffcc99" /></label><br>
+    <label>Kolor ubrania: <input type="color" id="clothesColor" value="#3366ff" /></label>
+  </div>
 
-  <script type="module">
-    import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
-    import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
-
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/examples/js/controls/OrbitControls.js"></script>
+  <script>
     const scene = new THREE.Scene();
-
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = 3;
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
     // Światło
-    const light = new THREE.PointLight(0xffffff, 1.2);
-    light.position.set(10, 10, 10);
+    const light = new THREE.HemisphereLight(0xffffff, 0x444444);
+    light.position.set(0, 200, 0);
     scene.add(light);
 
-    // Awatar (na start: kula jako głowa)
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
-    const material = new THREE.MeshStandardMaterial({ color: 0x55ccff });
-    const avatarHead = new THREE.Mesh(geometry, material);
-    scene.add(avatarHead);
+    // Kontrolki
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enablePan = false;
+    controls.minDistance = 3;
+    controls.maxDistance = 10;
 
-    // Sterowanie
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.1;
+    // Ciało (prosty model avatara)
+    const skinMaterial = new THREE.MeshStandardMaterial({ color: "#ffcc99" });
+    const clothesMaterial = new THREE.MeshStandardMaterial({ color: "#3366ff" });
 
-    // Animacja
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), skinMaterial);
+    head.position.y = 2.5;
+    scene.add(head);
+
+    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 1.5, 32), clothesMaterial);
+    body.position.y = 1.25;
+    scene.add(body);
+
+    const leftArm = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 1.2, 32), clothesMaterial);
+    leftArm.position.set(-0.9, 1.8, 0);
+    leftArm.rotation.z = Math.PI / 4;
+    scene.add(leftArm);
+
+    const rightArm = leftArm.clone();
+    rightArm.position.x = 0.9;
+    rightArm.rotation.z = -Math.PI / 4;
+    scene.add(rightArm);
+
+    const leftLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 1.2, 32), clothesMaterial);
+    leftLeg.position.set(-0.3, 0.1, 0);
+    scene.add(leftLeg);
+
+    const rightLeg = leftLeg.clone();
+    rightLeg.position.x = 0.3;
+    scene.add(rightLeg);
+
+    camera.position.z = 5;
+
     function animate() {
       requestAnimationFrame(animate);
-      avatarHead.rotation.y += 0.005;
-      controls.update();
       renderer.render(scene, camera);
     }
-
     animate();
 
-    // Reagowanie na zmianę rozmiaru okna
-    window.addEventListener('resize', () => {
+    // Interakcja
+    document.getElementById("skinColor").addEventListener("input", (e) => {
+      skinMaterial.color.set(e.target.value);
+    });
+    document.getElementById("clothesColor").addEventListener("input", (e) => {
+      clothesMaterial.color.set(e.target.value);
+    });
+
+    window.addEventListener("resize", () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
